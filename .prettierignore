@@ -1,0 +1,13 @@
+.DS_Store
+node_modules
+/package
+.env
+.env.*
+
+# Ignore lock files:
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore artifacts:
+build
+coverage
