@@ -4,3 +4,7 @@ node_modules
 .env
 .env*
 vite.config.ts.timestamp-*
+
+# Ignore lock files:
+yarn.lock
+pnpm-lock.yaml
