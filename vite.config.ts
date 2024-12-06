@@ -1,10 +1,10 @@
-import { vitePlugin as remix } from "@remix-run/dev";
+import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
     plugins: [
-        remix({
+        reactRouter({
             ignoredRouteFiles: ["**/*.css"],
             future: {
                 v3_fetcherPersist: true,

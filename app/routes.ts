@@ -1,4 +1,6 @@
-import type { RouteConfig } from "@remix-run/route-config";
+import { type RouteConfig, index } from "@react-router/dev/routes";
 
 
-export default [] satisfies RouteConfig;
+export default [
+    index("_index", { path: "/", }),
+] satisfies RouteConfig;
