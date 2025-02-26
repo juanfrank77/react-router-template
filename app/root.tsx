@@ -30,17 +30,12 @@ export const handle = {
   i18n: 'common',
 }
 
-export default function App() {
-  const { locale } = useLoaderData<typeof loader>()
-  const { i18n } = useTranslation()
-
-  useChangeLanguage(locale)
-
+export function Layout({ children, lang, dir }: { children: React.ReactNode; lang?: string; dir?: string }) {
   return (
     <html
       className="overflow-y-auto overflow-x-hidden"
-      lang={i18n.language}
-      dir={i18n.dir()}
+      lang={lang}
+      dir={dir}
     >
       <head>
         <meta charSet="utf-8" />
@@ -49,10 +44,33 @@ export default function App() {
         <Links />
       </head>
       <body className="w-full h-full">
-        <Outlet />
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
+  )
+}
+
+export default function App() {
+  const { locale } = useLoaderData<typeof loader>()
+  const { i18n } = useTranslation()
+
+  useChangeLanguage(locale)
+
+  return (
+    <Layout lang={locale} dir={i18n.dir()}>
+      <Outlet />
+    </Layout>
+  )
+}
+
+export function ErrorBoundary() {
+  const { i18n } = useTranslation()
+  return (
+    <div className="mx-auto p-12 text-center">
+      <h1>Oops!</h1>
+      <p>Sorry, an unexpected error has occurred.</p>
+    </div>
   )
 }
