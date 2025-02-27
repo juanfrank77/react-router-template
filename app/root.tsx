@@ -30,13 +30,17 @@ export const handle = {
   i18n: 'common',
 }
 
-export function Layout({ children, lang, dir }: { children: React.ReactNode; lang?: string; dir?: string }) {
+export function Layout({
+  children,
+  lang,
+  dir,
+}: {
+  children: React.ReactNode
+  lang?: string
+  dir?: string
+}) {
   return (
-    <html
-      className="overflow-y-auto overflow-x-hidden"
-      lang={lang}
-      dir={dir}
-    >
+    <html className="overflow-y-auto overflow-x-hidden" lang={lang} dir={dir}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
