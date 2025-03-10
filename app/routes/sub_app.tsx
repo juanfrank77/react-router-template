@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Input } from '~/components/input'
+import { Theme, useTheme } from 'remix-themes'
+import { Input } from '~/components/atoms/input'
 import { getCommon } from '~/utils/.common/common'
 import { getSecret } from '~/utils/.server/secret'
 import { getPublic } from '~/utils/.client/public'
@@ -13,18 +14,28 @@ export function loader({ context }: Route.LoaderArgs) {
   }
 }
 
-export async function ClientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+export function ClientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   console.log(getPublic(), getCommon())
   return {
-    ...(await serverLoader),
+    ...(serverLoader),
   }
 }
 
 export default function SubApp({ loaderData: info }: Route.ComponentProps) {
   const [data, setData] = useState('')
+  const [, setTheme] = useTheme()
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      <div className="text-center">
+        <p>Theme change</p>
+        <button
+          type='button'
+          onClick={() => setTheme((prev) => (prev === Theme.DARK ? Theme.LIGHT : Theme.DARK))}
+        >
+          Toggle theme
+        </button>
+      </div>
       <Input value={data} onChange={(e) => setData(e.target.value)} />
       <div className="mt-8 w-full max-w-4xl overflow-x-auto">
         <table className="w-full border-collapse bg-gray-100 shadow-md rounded-lg">

@@ -7,10 +7,12 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from 'react-router'
+import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from 'remix-themes'
 import { useTranslation } from 'react-i18next'
 import { useChangeLanguage } from 'remix-i18next/react'
 import i18next from './localization/i18n.server'
 import styles from '~/tailwind.css?url'
+import { themeSessionResolver } from './utils/session.server'
 
 export async function loader({
   context,
@@ -21,7 +23,8 @@ export async function loader({
 }) {
   const { lang, clientEnv } = context
   const locale = await i18next.getLocale(request)
-  return { lang, clientEnv, locale }
+  const themeSession = await themeSessionResolver(request)
+  return { lang, clientEnv, locale, theme: themeSession.getTheme() }
 }
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
@@ -39,20 +42,28 @@ export function Layout({
   lang?: string
   dir?: string
 }) {
+  const { theme } = useLoaderData()
   return (
-    <html className="overflow-y-auto overflow-x-hidden" lang={lang} dir={dir}>
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body className="w-full h-full">
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
+    <ThemeProvider
+      specifiedTheme={theme}
+      themeAction='/action/set-theme'
+      disableTransitionOnThemeChange={true}
+    >
+      <html className="overflow-y-auto overflow-x-hidden" lang={lang} dir={dir} data-theme={theme ?? ""}>
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <Meta />
+          <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
+          <Links />
+        </head>
+        <body className="w-full h-full">
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+        </body>
+      </html>
+    </ThemeProvider>
   )
 }
 
@@ -70,7 +81,7 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
-  const { i18n } = useTranslation()
+
   return (
     <div className="mx-auto p-12 text-center">
       <h1>Oops!</h1>

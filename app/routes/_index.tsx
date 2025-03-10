@@ -1,3 +1,4 @@
+import { Theme, useTheme } from 'remix-themes'
 import { Link, type MetaFunction } from 'react-router'
 import { useTranslation } from 'react-i18next'
 
@@ -8,6 +9,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const { t } = useTranslation()
 
+  const [theme, setTheme, { definedBy }] = useTheme()
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
@@ -17,6 +19,25 @@ export default function Index() {
             <img src="" className="h-8" alt="Logo" />
           </div>
           <div className="flex space-x-4">
+            <label className='flex gap-4'>
+              Theme
+              <select
+                name='theme'
+                value={definedBy === "SYSTEM" ? "" : (theme ?? "")}
+                onChange={(e) => {
+                  const nextTheme = e.target.value
+                  if (nextTheme === '') {
+                    setTheme(null)
+                  } else {
+                    setTheme(nextTheme as Theme)
+                  }
+                }}
+              >
+                <option value=''>System</option>
+                <option value={Theme.LIGHT}>Light</option>
+                <option value={Theme.DARK}>Dark</option>
+              </select>
+            </label>
             <a
               href="https://discord.gg/invite/5VhK6H5"
               className="text-gray-600 hover:text-gray-900"
