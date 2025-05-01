@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { useChangeLanguage } from 'remix-i18next/react'
 import i18next from './localization/i18n.server'
 import styles from '~/tailwind.css?url'
+import { Route } from './+types/root'
 
 export async function loader({
   context,
@@ -69,12 +70,24 @@ export default function App() {
   )
 }
 
-export function ErrorBoundary() {
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  let message = "Oops!";
+  let details = "Sorry, an unexpected error has occurred.";
+  let stack: string | undefined;
+
   const { i18n } = useTranslation()
+
+  if (import.meta.env.DEV && error instanceof Error) {
+    details = error.message;
+    stack = error.stack;
+  }
+
   return (
-    <div className="mx-auto p-12 text-center">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-    </div>
+    <main className="mx-auto pt-16 p-4 text-center">
+      <h1>{message}</h1>
+      <p>{details}</p>
+      {stack && <pre className='w-full p-4'><code>{stack}</code></pre>}
+      <p className="text-gray-500">{i18n.t('errorBoundary')}</p>
+    </main>
   )
 }
