@@ -20,7 +20,7 @@ export default function Index() {
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">{t('hello')}</h1>
           <p className="text-xl text-gray-600 mb-2">{t('welcome')}</p>
-          <Link to="/sub">Go to Sub App</Link>
+          <Link to="/sub">{t('subapp')}</Link>
         </div>
       </main>
       <Footer />
