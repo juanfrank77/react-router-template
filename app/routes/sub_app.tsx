@@ -16,7 +16,7 @@ export function loader({ context }: Route.LoaderArgs) {
 export async function ClientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   console.log(getPublic(), getCommon())
   return {
-    ...(await serverLoader),
+    ...serverLoader,
   }
 }
 
