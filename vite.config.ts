@@ -13,7 +13,7 @@ export default defineConfig({
     reactRouter(),
     iconsSpritesheet({
       withTypes: true,
-      inputDir: 'icons',
+      inputDir: './resources/icons',
       outputDir: './public/icons',
       fileName: 'icons.svg',
       formatter: 'prettier',
