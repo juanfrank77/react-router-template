@@ -8,7 +8,7 @@ export default function Header() {
     const toggleMenu = () => setIsOpen(!isOpen)
 
     return (
-        <header className="bg-white shadow-sm">
+        <header className="bg-white shadow-xs">
             <nav className="container mx-auto p-2 flex justify-between">
                 <div className="flex items-center">
                     <Link to="/">
