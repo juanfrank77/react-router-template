@@ -9,6 +9,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useChangeLanguage } from 'remix-i18next/react'
 import { ClientHintCheck, getHints } from './lib/client-hints'
+import { LanguageSwitcher } from './lib/language-switcher'
 import styles from '~/tailwind.css?url'
 import { Route } from './+types/root'
 
@@ -53,6 +54,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <Links />
       </head>
       <body className="w-full h-full">
+        <LanguageSwitcher />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
