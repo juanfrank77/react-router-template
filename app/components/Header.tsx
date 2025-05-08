@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { Link, NavLink } from "react-router";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
@@ -8,11 +9,23 @@ export default function Header() {
 
     return (
         <header className="bg-white shadow-sm">
-            <nav className="container mx-auto p-4 flex justify-between">
+            <nav className="container mx-auto p-2 flex justify-between">
                 <div className="flex items-center">
-                    <img src="" className="h-8" alt="Logo" />
+                    <Link to="/">
+                        <img src="" className="h-8" alt="Logo" />
+                    </Link>
                 </div>
+
+                <button className="burger md:hidden z-20 relative" aria-label="Toggle Menu">-</button>
+
                 <div className="flex space-x-4">
+                    <ul className="flex flex-col md:flex-row h-full">
+                        <li>
+                            <NavLink to="/" className="md:py-8 inline-block">Home</NavLink>
+                            <NavLink to="/sub" className="md:py-8 inline-block">Sub App</NavLink>
+                            <NavLink to="/signin" className="md:py-8 inline-block">Sign In</NavLink>
+                        </li>
+                    </ul>
                     <button type="button" onClick={toggleMenu} className="text-gray-600 hover:text-gray-900">
                         Menu
                     </button>
