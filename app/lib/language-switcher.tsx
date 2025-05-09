@@ -16,7 +16,7 @@ export function LanguageSwitcher() {
     }
 
     return (
-        <div className="flex items-center gap-2 p-2">
+        <div className="z-10 p-2">
             <select onChange={handleChange} value={i18n.language}>
                 {supportedLanguages.map((lang) => (
                     <option key={lang} value={lang}>

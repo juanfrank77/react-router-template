@@ -9,7 +9,7 @@ export default function Header() {
 
     return (
         <header className="bg-white shadow-xs">
-            <nav className="container mx-auto p-2 flex justify-between">
+            <nav className="mx-auto px-8 flex justify-between">
                 <div className="flex items-center">
                     <Link to="/">
                         <img src="" className="h-8" alt="Logo" />
