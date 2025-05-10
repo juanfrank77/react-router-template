@@ -1,5 +1,5 @@
-import spanish from "../../resources/locales/es/common.json"
-import english from "../../resources/locales/en/common.json"
+import spanish from "../../public/locales/es/common.json"
+import english from "../../public/locales/en/common.json"
 
 const languages = ['en', 'es'] as const
 export const supportedLanguages = [...languages]
