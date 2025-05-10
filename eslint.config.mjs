@@ -6,18 +6,20 @@ import pluginReact from 'eslint-plugin-react'
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
-  { languageOptions: { globals: globals.browser } },
+  { files: ['**/*.{js,ts,jsx,tsx}'] },
+  { languageOptions: { globals: { ...globals.browser } } },
   prettierConfig,
   pluginJs.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  pluginReact.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  tseslint.configs.strictTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
   {
     languageOptions: {
       parserOptions: {
         sourceType: 'module',
         projectService: true,
-        tsconfigRootDir: import.meta.dirname(import.meta.url),
+        tsconfigRootDir: import.meta.dirname,
       },
     },
   },

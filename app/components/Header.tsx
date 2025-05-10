@@ -12,7 +12,7 @@ export default function Header() {
             <nav className="mx-auto px-8 flex justify-between">
                 <div className="flex items-center">
                     <Link to="/">
-                        <img src="" className="h-8" alt="Logo" />
+                        <img src="resources/icons/safari-pinned-tab.svg" className="h-8" alt="Logo" />
                     </Link>
                 </div>
 

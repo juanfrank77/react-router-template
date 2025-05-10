@@ -42,10 +42,10 @@ export default function App({ loaderData }: Route.ComponentProps) {
   const { lang, clientEnv } = loaderData
   const { i18n } = useTranslation()
 
-  useChangeLanguage(lang || 'en')
+  useChangeLanguage(lang)
 
   return (
-    <html className="overflow-y-auto overflow-x-hidden" lang={lang || 'en'} dir={i18n.dir()} data-env={clientEnv}>
+    <html className="overflow-y-auto overflow-x-hidden" lang={lang} dir={i18n.dir()} data-env={clientEnv.NODE_ENV}>
       <head>
         <ClientHintCheck />
         <meta charSet="utf-8" />
@@ -64,8 +64,8 @@ export default function App({ loaderData }: Route.ComponentProps) {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "Sorry, an unexpected error has occurred.";
+  const message = "Oops!";
+  const details = "Sorry, an unexpected error has occurred.";
   let stack: string | undefined;
 
   const { t } = useTranslation()
