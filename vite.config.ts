@@ -15,7 +15,7 @@ export default defineConfig({
     tailwindcss(),
     iconsSpritesheet({
       withTypes: true,
-      inputDir: './resources/icons',
+      inputDir: 'icons',
       outputDir: './public/icons',
       fileName: 'icons.svg',
       formatter: 'prettier',
