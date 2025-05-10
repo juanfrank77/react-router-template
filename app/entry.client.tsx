@@ -17,7 +17,7 @@ async function hydrate() {
       ...i18n, // Your i18next configuration
       ns: getInitialNamespaces(), // Detects the namespaces used in the initial render
       backend: {
-        loadPath: '/locales/{{lng}}/{{ns}}.json',
+        loadPath: '/resources/locales/{{lng}}/{{ns}}.json',
       },
       detection: {
         // Here only enable htmlTag detection, we'll detect the language only

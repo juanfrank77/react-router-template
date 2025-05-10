@@ -16,7 +16,7 @@ export function LanguageSwitcher() {
     }
 
     return (
-        <div className="z-10 p-2">
+        <div className="absolute top-0 right-0 z-10">
             <select onChange={handleChange} value={i18n.language}>
                 {supportedLanguages.map((lang) => (
                     <option key={lang} value={lang}>

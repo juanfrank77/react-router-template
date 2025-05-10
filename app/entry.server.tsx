@@ -1,4 +1,4 @@
-import { PassThrough } from 'stream'
+import { PassThrough } from 'node:stream'
 import { createReadableStreamFromReadable } from '@react-router/node'
 import { createInstance } from 'i18next'
 import { isbot } from 'isbot'
@@ -6,6 +6,7 @@ import { renderToPipeableStream } from 'react-dom/server'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 import i18next from './localization/i18n.server'
 import i18n from './localization/i18n'
+import { resources } from './localization/resource'
 import { type EntryContext, ServerRouter } from 'react-router'
 
 export const streamTimeout = 10000
@@ -29,9 +30,7 @@ export default async function handleRequest(
       ...i18n,
       lng,
       ns,
-      backend: {
-        loadPath: './public/locales/{{lng}}/{{ns}}.json',
-      },
+      resources,
     })
 
   return new Promise((resolve, reject) => {
