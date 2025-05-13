@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { useChangeLanguage } from 'remix-i18next/react'
 import { ClientHintCheck, getHints } from './lib/client-hints'
 import { LanguageSwitcher } from './lib/language-switcher'
+import { ThemeSelector } from './lib/theme-selector'
 import styles from '~/tailwind.css?url'
 import { Route } from './+types/root'
 
@@ -39,13 +40,14 @@ export function Layout({
 }
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const { lang, clientEnv } = loaderData
+  const { lang, clientEnv, hints } = loaderData
   const { i18n } = useTranslation()
+  const theme = hints.theme
 
   useChangeLanguage(lang)
 
   return (
-    <html className="overflow-y-auto overflow-x-hidden" lang={lang} dir={i18n.dir()} data-env={clientEnv.NODE_ENV}>
+    <html className="overflow-y-auto overflow-x-hidden" lang={lang} dir={i18n.dir()} data-env={clientEnv.NODE_ENV} data-theme={theme}>
       <head>
         <ClientHintCheck />
         <meta charSet="utf-8" />
@@ -55,6 +57,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
       </head>
       <body className="w-full h-full">
         <LanguageSwitcher />
+        <ThemeSelector />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

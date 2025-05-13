@@ -8,7 +8,7 @@ export default function Header() {
     const toggleMenu = () => setIsOpen(!isOpen)
 
     return (
-        <header className="bg-white shadow-xs">
+        <header className="bg-white shadow-xs dark:bg-gray-900">
             <nav className="mx-auto px-8 flex justify-between">
                 <div className="flex items-center">
                     <Link to="/">
@@ -21,12 +21,12 @@ export default function Header() {
                 <div className="flex space-x-4">
                     <ul className="flex flex-col md:flex-row h-full">
                         <li>
-                            <NavLink to="/" className="md:py-4 md:px-2 inline-block">Home</NavLink>
-                            <NavLink to="/sub" className="md:py-4 md:px-2 inline-block">Sub App</NavLink>
-                            <NavLink to="/signin" className="md:py-4 md:px-2 inline-block">Sign In</NavLink>
+                            <NavLink to="/" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 md:py-4 md:px-2 inline-block">Home</NavLink>
+                            <NavLink to="/sub" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 md:py-4 md:px-2 inline-block">Sub App</NavLink>
+                            <NavLink to="/signin" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 md:py-4 md:px-2 inline-block">Sign In</NavLink>
                         </li>
                     </ul>
-                    <button type="button" onClick={toggleMenu} className="text-gray-600 hover:text-gray-900">
+                    <button type="button" onClick={toggleMenu} className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100">
                         Menu
                     </button>
                     <AnimatePresence mode="wait">
@@ -37,8 +37,8 @@ export default function Header() {
                                 exit={{ opacity: 0 }}
                                 className="fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex items-center justify-center"
                             >
-                                <div className="bg-white p-4 rounded-lg shadow-lg md:py-4 md:px-2">
-                                    <button type="button" onClick={toggleMenu} className="text-gray-600 hover:text-gray-900">Close</button>
+                                <div className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-lg md:py-4 md:px-2">
+                                    <button type="button" onClick={toggleMenu} className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100">Close</button>
                                 </div>
                             </motion.div>
                         )}
