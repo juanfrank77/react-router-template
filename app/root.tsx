@@ -5,9 +5,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from 'react-router'
 import { ClientHintCheck, getHints } from './lib/client-hints'
 import { ThemeSelector } from './lib/theme-selector'
+import { ConvexProvider, ConvexReactClient } from "convex/react"
 import styles from '~/tailwind.css?url'
 import { Route } from './+types/root'
 
@@ -15,25 +17,17 @@ export async function loader({
   context,
   request,
 }: Route.LoaderArgs) {
+  const CONVEX_URL = import.meta.env.VITE_CONVEX_URL
   const { clientEnv } = context
   const hints = getHints(request)
-  return { clientEnv, hints }
+  return { clientEnv, hints, CONVEX_URL }
 }
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export function Layout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <>{children}</>
-  )
-}
-
 export default function App({ loaderData }: Route.ComponentProps) {
-  const { clientEnv, hints } = loaderData
+  const { clientEnv, hints, CONVEX_URL } = loaderData
+  const convex = new ConvexReactClient(CONVEX_URL)
   const theme = hints.theme
 
   return (
@@ -46,8 +40,10 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <Links />
       </head>
       <body className="w-full h-full">
-        <ThemeSelector />
-        <Outlet />
+        <ConvexProvider client={convex}>
+          <ThemeSelector />
+          <Outlet />
+        </ConvexProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -6,6 +6,8 @@ import { getPublic } from '~/utils/.client/public'
 import { getEnv } from '~/utils/env.server'
 import type { Route } from './+types/sub_app'
 import { Link } from 'react-router'
+import { useQuery } from "convex/react"
+import { api } from "../../convex/_generated/api"
 
 export function loader({ context }: Route.LoaderArgs) {
   console.log(context, getSecret(), getCommon())
@@ -23,6 +25,7 @@ export async function ClientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 
 export default function SubApp({ loaderData: info }: Route.ComponentProps) {
   const [data, setData] = useState('')
+  const tasks = useQuery(api.tasks.getTasks)
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center">
@@ -41,6 +44,11 @@ export default function SubApp({ loaderData: info }: Route.ComponentProps) {
               <tr key={key} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                 <td className="px-6 py-4 text-gray-600 dark:text-gray-300">{key}</td>
                 <td className="px-6 py-4 text-gray-600 dark:text-gray-300">{value ?? '-'}</td>
+              </tr>
+            ))}
+            {tasks === undefined ? "Loading..." : tasks.map(({ _id, text }: { _id: string, text: string }) => (
+              <tr key={_id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                <td className="px-6 py-4 text-gray-600 dark:text-gray-300">{text}</td>
               </tr>
             ))}
             <tr>
