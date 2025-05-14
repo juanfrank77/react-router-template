@@ -1,13 +1,8 @@
 import { PassThrough } from 'node:stream'
 import { createReadableStreamFromReadable } from '@react-router/node'
-import { createInstance } from 'i18next'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
-import { I18nextProvider, initReactI18next } from 'react-i18next'
-import i18next from './localization/i18n.server'
-import i18n from './localization/i18n'
-import { resources } from './localization/resource'
-import { type EntryContext, ServerRouter } from 'react-router'
+import { ActionFunctionArgs, EntryContext, LoaderFunctionArgs, ServerRouter } from 'react-router'
 
 export const streamTimeout = 10000
 
@@ -20,26 +15,12 @@ export default async function handleRequest(
   const callbackName = isbot(request.headers.get('user-agent'))
     ? 'onAllReady'
     : 'onShellReady'
-  const instance = createInstance()
-  const lng = await i18next.getLocale(request)
-  const ns = i18next.getRouteNamespaces(context as any)
-
-  await instance
-    .use(initReactI18next) // Tell our instance to use react-i18next
-    .init({
-      ...i18n,
-      lng,
-      ns,
-      resources,
-    })
 
   return new Promise((resolve, reject) => {
     let didError = false
 
     const { pipe, abort } = renderToPipeableStream(
-      <I18nextProvider i18n={instance}>
-        <ServerRouter context={context} url={request.url} />
-      </I18nextProvider>,
+      <ServerRouter context={context} url={request.url} />,
       {
         [callbackName]: () => {
           const body = new PassThrough()
@@ -56,6 +37,7 @@ export default async function handleRequest(
           pipe(body)
         },
         onShellError: (error) => {
+          console.error(error)
           reject(error)
         },
         onError: (error) => {

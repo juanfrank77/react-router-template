@@ -6,10 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router'
-import { useTranslation } from 'react-i18next'
-import { useChangeLanguage } from 'remix-i18next/react'
 import { ClientHintCheck, getHints } from './lib/client-hints'
-import { LanguageSwitcher } from './lib/language-switcher'
 import { ThemeSelector } from './lib/theme-selector'
 import styles from '~/tailwind.css?url'
 import { Route } from './+types/root'
@@ -18,16 +15,12 @@ export async function loader({
   context,
   request,
 }: Route.LoaderArgs) {
-  const { lang, clientEnv } = context
+  const { clientEnv } = context
   const hints = getHints(request)
-  return { lang, clientEnv, hints }
+  return { clientEnv, hints }
 }
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
-
-export const handle = {
-  i18n: 'common',
-}
 
 export function Layout({
   children,
@@ -40,14 +33,11 @@ export function Layout({
 }
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const { lang, clientEnv, hints } = loaderData
-  const { i18n } = useTranslation()
+  const { clientEnv, hints } = loaderData
   const theme = hints.theme
 
-  useChangeLanguage(lang)
-
   return (
-    <html className="overflow-y-auto overflow-x-hidden" lang={lang} dir={i18n.dir()} data-env={clientEnv.NODE_ENV} data-theme={theme}>
+    <html className="overflow-y-auto overflow-x-hidden" data-env={clientEnv.NODE_ENV} data-theme={theme}>
       <head>
         <ClientHintCheck />
         <meta charSet="utf-8" />
@@ -56,7 +46,6 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <Links />
       </head>
       <body className="w-full h-full">
-        <LanguageSwitcher />
         <ThemeSelector />
         <Outlet />
         <ScrollRestoration />
@@ -71,15 +60,12 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   const details = "Sorry, an unexpected error has occurred.";
   let stack: string | undefined;
 
-  const { t } = useTranslation()
-
   if (import.meta.env.DEV && error instanceof Error) stack = error.stack;
 
   return (
     <main className="mx-auto pt-16 p-4 text-center">
       <h1>{message}</h1>
       <p>{details}</p>
-      <p className="text-gray-500">{t('errorBoundary')}</p>
       {stack && <pre className='w-full p-4'><code>{stack}</code></pre>}
     </main>
   )

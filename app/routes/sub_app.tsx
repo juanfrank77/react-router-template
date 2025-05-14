@@ -5,6 +5,7 @@ import { getSecret } from '~/utils/.server/secret'
 import { getPublic } from '~/utils/.client/public'
 import { getEnv } from '~/utils/env.server'
 import type { Route } from './+types/sub_app'
+import { Link } from 'react-router'
 
 export function loader({ context }: Route.LoaderArgs) {
   console.log(context, getSecret(), getCommon())
@@ -26,6 +27,7 @@ export default function SubApp({ loaderData: info }: Route.ComponentProps) {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center">
       <Input value={data} onChange={(e) => setData(e.target.value)} />
+      <Link to="/">Go back home</Link>
       <div className="mt-8 w-full max-w-4xl overflow-x-auto">
         <table className="w-full border-collapse bg-gray-100 dark:bg-gray-900 shadow-md rounded-lg">
           <thead>
