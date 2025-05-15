@@ -11,33 +11,23 @@ import { ThemeSelector } from './lib/theme-selector'
 import styles from '~/tailwind.css?url'
 import { Route } from './+types/root'
 
-export async function loader({
-  context,
-  request,
-}: Route.LoaderArgs) {
-  const { clientEnv } = context
+export async function loader({ request }: Route.LoaderArgs) {
   const hints = getHints(request)
-  return { clientEnv, hints }
+  return { hints }
 }
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export function Layout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <>{children}</>
-  )
+export function Layout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
 }
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const { clientEnv, hints } = loaderData
+  const { hints } = loaderData
   const theme = hints.theme
 
   return (
-    <html className="overflow-y-auto overflow-x-hidden" data-env={clientEnv.NODE_ENV} data-theme={theme}>
+    <html className="overflow-y-auto overflow-x-hidden" data-theme={theme}>
       <head>
         <ClientHintCheck />
         <meta charSet="utf-8" />
@@ -56,17 +46,21 @@ export default function App({ loaderData }: Route.ComponentProps) {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  const message = "Oops!";
-  const details = "Sorry, an unexpected error has occurred.";
-  let stack: string | undefined;
+  const message = 'Oops!'
+  const details = 'Sorry, an unexpected error has occurred.'
+  let stack: string | undefined
 
-  if (import.meta.env.DEV && error instanceof Error) stack = error.stack;
+  if (import.meta.env.DEV && error instanceof Error) stack = error.stack
 
   return (
     <main className="mx-auto pt-16 p-4 text-center">
       <h1>{message}</h1>
       <p>{details}</p>
-      {stack && <pre className='w-full p-4'><code>{stack}</code></pre>}
+      {stack && (
+        <pre className="w-full p-4">
+          <code>{stack}</code>
+        </pre>
+      )}
     </main>
   )
 }

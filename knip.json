@@ -1,6 +1,6 @@
 {
-    "$schema": "https://unpkg.com/knip@5/schema.json",
-    "remix": true,
-    "ignore": ["public/icons/types.ts", "react-router-config.ts"],
-    "ignoreDependencies": ["tailwindcss"]
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "remix": true,
+  "ignore": ["public/icons/types.ts", "react-router-config.ts"],
+  "ignoreDependencies": ["tailwindcss"]
 }
