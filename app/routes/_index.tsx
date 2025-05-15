@@ -1,6 +1,4 @@
 import { type MetaFunction } from 'react-router'
-import Footer from '~/components/Footer'
-import Header from '~/components/Header'
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Template' }]
@@ -9,8 +7,6 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div className="bg-white shadow-xs dark:bg-gray-900 min-h-screen flex flex-col">
-      {/* Header */}
-      <Header />
 
       {/* Main Content */}
       <main className="flex-1 overflow-hidden">
@@ -23,7 +19,6 @@ export default function Index() {
           </p>
         </div>
       </main>
-      <Footer />
     </div>
   )
 }

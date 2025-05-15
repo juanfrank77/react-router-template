@@ -5,9 +5,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from 'react-router'
 import { ClientHintCheck, getHints } from './lib/client-hints'
 import { ThemeSelector } from './lib/theme-selector'
+import Header from './components/Header'
+import Footer from './components/Footer'
 import styles from '~/tailwind.css?url'
 import { Route } from './+types/root'
 
@@ -19,11 +22,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
-}
-
-export default function App({ loaderData }: Route.ComponentProps) {
-  const { hints } = loaderData
+  const { hints } = useLoaderData<typeof loader>();
   const theme = hints.theme
 
   return (
@@ -37,12 +36,18 @@ export default function App({ loaderData }: Route.ComponentProps) {
       </head>
       <body className="w-full h-full">
         <ThemeSelector />
-        <Outlet />
+        <Header />
+        {children}
+        <Footer />
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   )
+}
+
+export default function App() {
+  return <Outlet />
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
