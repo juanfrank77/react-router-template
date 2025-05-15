@@ -25,8 +25,9 @@ export async function loader({
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export default function App({ loaderData }: Route.ComponentProps) {
-  const { clientEnv, hints, CONVEX_URL } = loaderData
+export function layout({ children }: { children: React.ReactNode }) {
+
+  const { clientEnv, hints, CONVEX_URL } = useLoaderData()
   const convex = new ConvexReactClient(CONVEX_URL)
   const theme = hints.theme
 
@@ -42,13 +43,17 @@ export default function App({ loaderData }: Route.ComponentProps) {
       <body className="w-full h-full">
         <ConvexProvider client={convex}>
           <ThemeSelector />
-          <Outlet />
+          {children}
         </ConvexProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   )
+}
+
+export default function App() {
+  return <Outlet />
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
