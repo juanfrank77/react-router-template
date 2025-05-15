@@ -25,7 +25,7 @@ export async function loader({
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export function layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode }) {
 
   const { clientEnv, hints, CONVEX_URL } = useLoaderData()
   const convex = new ConvexReactClient(CONVEX_URL)
